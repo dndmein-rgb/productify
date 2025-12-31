@@ -23,7 +23,10 @@ export const products = pgTable("products", {
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
   createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
-  updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { mode: "date" })
+    .notNull()
+    .defaultNow()
+    .$onUpdate(() => new Date()),
 });
 
 export const comments = pgTable("comments", {
@@ -64,7 +67,10 @@ export const commentsRelations = relations(comments, ({ one }) => ({
   // `comments.userId` is the foreign key,  `users.id` is the primary key
   user: one(users, { fields: [comments.userId], references: [users.id] }), // One comment → one user
   // `comments.productId` is the foreign key,  `products.id` is the primary key
-  product: one(products, { fields: [comments.productId], references: [products.id] }), // One comment → one product
+  product: one(products, {
+    fields: [comments.productId],
+    references: [products.id],
+  }), // One comment → one product
 }));
 
 // Type inference
