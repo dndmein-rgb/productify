@@ -20,7 +20,7 @@ export const products = pgTable("products", {
   description: text("description").notNull(),
   imageUrl: text("image_url").notNull(),
   userId: text("user_id")
-    .notNull()
+    .notNull()        //The value in user_id MUST exist in users.id
     .references(() => users.id, { onDelete: "cascade" }),
   createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
   updatedAt: timestamp("updated_at", { mode: "date" })
@@ -46,7 +46,6 @@ export const comments = pgTable("comments", {
 
 // 🔴 Users Relations: A user can have many products and many comments
 // 🔴 `many()` means one user can have multiple related records
-
 export const usersRelations = relations(users, ({ many }) => ({
   products: many(products), // 🔴 One user → many products
   comments: many(comments), // 🔴 One user → many comments
@@ -60,7 +59,7 @@ export const productsRelations = relations(products, ({ one, many }) => ({
   // `fields` = the foreign key column in THIS table (products.userId)
   // `references` = the primary key column in the RELATED table (users.id)
   user: one(users, { fields: [products.userId], references: [users.id] }), // one product → one user
-}));
+}));                                  //products.userId → users.id
 
 // Comments Relations: A comment belongs to one user and one product
 export const commentsRelations = relations(comments, ({ one }) => ({
