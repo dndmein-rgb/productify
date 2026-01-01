@@ -10,8 +10,7 @@ export async function syncUser(req:Request,res:Response) {
         }
         const {name,email,imageUrl}=req.body;
         if(!name||!email||!imageUrl){
-            return res.status(400).json({error:"name,email,image are all required"})
-        }
+            return res.status(400).json({error:"name, email, and imageUrl are all required"})        }
         const user=await queries.upsertUser({
             id:userId,
             email,
@@ -20,7 +19,6 @@ export async function syncUser(req:Request,res:Response) {
         })
         return res.status(200).json(user);
     } catch (error) {
-        console.error("Error syncing the user");
-        res.status(500).json({error:"Failed to sync user"})
-    }
+        console.error("Error syncing the user",error);
+        return res.status(500).json({error:"Failed to sync user"})    }
 }

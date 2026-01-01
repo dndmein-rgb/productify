@@ -6,9 +6,9 @@ export async function getAllProducts(req: Request, res: Response) {
     const products = await queries.getAllProducts();
     res.status(200).json(products);
   } catch (error) {
-    res.status(500).json({ error: "Failed to fetch products" });
-  }
-}
+    console.error("Error creating product:", error);
+    res.status(500).json({ error: "Failed to create product" });
+  }}
 export async function getMyProducts(req: Request, res: Response) {
   try {
     const { userId } = getAuth(req);
@@ -24,14 +24,13 @@ export async function getProductById(req: Request, res: Response) {
   try {
     const { id } = req.params;
     const product = await queries.getProductById(id);
-    if (!product) return res.status(500).json({ error: "Product not found" });
-    res.status(500).json(product);
+    if (!product) return res.status(404).json({ error: "Product not found" });
+    res.status(200).json(product);
   } catch (error) {
     console.error("Error getting product", error);
     res.status(500).json({ error: "Failed to get product" });
   }
 }
-
 export async function createProduct(req: Request, res: Response) {
   try {
     const { userId } = getAuth(req);
