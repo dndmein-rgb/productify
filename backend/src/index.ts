@@ -10,8 +10,7 @@ import { ENV } from './config/env';
 const app=express();
 const PORT=ENV.PORT||3000;
 
-app.use(cors({origin:ENV.FRONTEND_URL}))
-app.use(clerkMiddleware());
+app.use(cors({origin:ENV.FRONTEND_URL,credentials:true}))//credentials true allows the frontend to send cookies to the backend so that we can authenticateapp.use(clerkMiddleware());
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
