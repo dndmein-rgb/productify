@@ -13,6 +13,7 @@ export const getAllProducts = async () => {
 };
 
 export const getProductById = async (id) => {
+     if (!id) throw new Error('Product ID is required');
   const { data } = await api.get(`/products/${id}`);
   return data;
 };
@@ -39,6 +40,8 @@ export const deleteProduct = async (id) => {
 
 // Comments API
 export const createComment = async ({ productId, content }) => {
+     if (!productId) throw new Error('Product ID is required');
+  if (!content) throw new Error('Comment content is required');
   const { data } = await api.post(`/comments/${productId}`, { content });
   return data;
 };

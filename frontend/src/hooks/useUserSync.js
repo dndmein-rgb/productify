@@ -13,15 +13,14 @@ function useUserSync() {
     mutationFn: syncUser,
   });
   useEffect(() => {
-    if (isSignedIn && user && !isPending && !isSuccess) {
+    if (isSignedIn && user && user.primaryEmailAddress && !isPending && !isSuccess) {
       syncUserMutation({
         email: user.primaryEmailAddress.emailAddress,
         name: user.fullName || user.firstName,
         imageUrl: user.imageUrl,
       });
     }
-  }, [isSignedIn, user, isPending, syncUserMutation, isSuccess]);
-  return {
+  }, [isSignedIn, user, isPending, syncUserMutation, isSuccess]);  return {
     isSynced: isSuccess,
   };
 }
