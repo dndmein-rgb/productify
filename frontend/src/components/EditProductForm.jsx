@@ -1,6 +1,7 @@
 import { ArrowLeftIcon, ImageIcon, TypeIcon, FileTextIcon, SaveIcon } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router";
+import { useEffect } from "react";
 
 function EditProductForm({ product, isPending, isError, onSubmit }) {
   const [formData, setFormData] = useState({
@@ -9,6 +10,13 @@ function EditProductForm({ product, isPending, isError, onSubmit }) {
     imageUrl: product.imageUrl,
   });
 
+  useEffect(() => {
+    setFormData({
+      title: product.title,
+      description: product.description,
+      imageUrl: product.imageUrl,
+    });
+  }, [product]);
   return (
     <div className="max-w-lg mx-auto">
       <Link to="/profile" className="btn btn-ghost btn-sm gap-1 mb-4">
@@ -92,4 +100,4 @@ function EditProductForm({ product, isPending, isError, onSubmit }) {
     </div>
   );
 }
-export default EditProductForm;
+export default EditProductForm
