@@ -1,7 +1,13 @@
-import { ArrowLeftIcon, ImageIcon, TypeIcon, FileTextIcon, SaveIcon } from "lucide-react";
-import { useState } from "react";
+import {
+  ArrowLeftIcon,
+  ImageIcon,
+  TypeIcon,
+  FileTextIcon,
+  SaveIcon,
+  Zap,
+} from "lucide-react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router";
-import { useEffect } from "react";
 
 function EditProductForm({ product, isPending, isError, onSubmit }) {
   const [formData, setFormData] = useState({
@@ -17,87 +23,167 @@ function EditProductForm({ product, isPending, isError, onSubmit }) {
       imageUrl: product.imageUrl,
     });
   }, [product]);
+
   return (
-    <div className="max-w-lg mx-auto">
-      <Link to="/profile" className="btn btn-ghost btn-sm gap-1 mb-4">
-        <ArrowLeftIcon className="size-4" /> Back
-      </Link>
+    <div className="min-h-screen px-4 py-8">
+      <div className="mx-auto max-w-2xl">
+        {/* Back */}
+        <Link
+          to="/profile"
+          className="btn btn-ghost btn-sm gap-1 mb-6"
+        >
+          <ArrowLeftIcon className="size-4" />
+          Back to Profile
+        </Link>
 
-      <div className="card bg-base-300">
-        <div className="card-body">
-          <h1 className="card-title">
-            <SaveIcon className="size-5 text-primary" />
-            Edit Product
-          </h1>
-
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              onSubmit(formData);
-            }}
-            className="space-y-4 mt-4"
-          >
-            <label className="input input-bordered flex items-center gap-2 bg-base-200">
-              <TypeIcon className="size-4 text-base-content/50" />
-              <input
-                type="text"
-                placeholder="Product title"
-                className="grow"
-                value={formData.title}
-                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                required
-              />
-            </label>
-
-            <label className="input input-bordered flex items-center gap-2 bg-base-200">
-              <ImageIcon className="size-4 text-base-content/50" />
-              <input
-                type="url"
-                placeholder="Image URL"
-                className="grow"
-                value={formData.imageUrl}
-                onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-                required
-              />
-            </label>
-
-            {formData.imageUrl && (
-              <div className="rounded-box overflow-hidden">
-                <img
-                  src={formData.imageUrl}
-                  alt="Preview"
-                  className="w-full h-50 object-cover"
-                  onError={(e) => (e.currentTarget.style.display = "none")}
-                />
+        <div className="card bg-base-200 border border-base-300 shadow-2xl">
+          <div className="card-body p-8 space-y-8">
+            {/* Header */}
+            <div className="flex items-center gap-4">
+              <div className="p-3 bg-primary/10 rounded-xl">
+                <SaveIcon className="size-8 text-primary" />
               </div>
-            )}
-
-            <div className="form-control">
-              <div className="flex items-start gap-2 p-3 rounded-box bg-base-200 border border-base-300">
-                <FileTextIcon className="size-4 text-base-content/50 mt-1" />
-                <textarea
-                  placeholder="Description"
-                  className="grow bg-transparent resize-none focus:outline-none min-h-24"
-                  value={formData.description}
-                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  required
-                />
+              <div>
+                <h1 className="text-4xl font-bold">Edit Product</h1>
+                <p className="text-base-content/60">
+                  Update your product details
+                </p>
               </div>
             </div>
 
-            {isError && (
-              <div role="alert" className="alert alert-error alert-sm">
-                <span>Failed to update. Try again.</span>
-              </div>
-            )}
+            <div className="divider" />
 
-            <button type="submit" className="btn btn-primary w-full" disabled={isPending}>
-              {isPending ? <span className="loading loading-spinner" /> : "Save Changes"}
-            </button>
-          </form>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                onSubmit(formData);
+              }}
+              className="space-y-8"
+            >
+              {/* TITLE */}
+              <div className="form-control space-y-2">
+                <label className="flex items-center gap-3">
+                  <div className="p-2 bg-primary/10 rounded-lg shrink-0">
+                    <TypeIcon className="size-5 text-primary" />
+                  </div>
+                  <span className="font-bold text-lg leading-none">
+                    Product Title
+                  </span>
+                </label>
+                <input
+                  type="text"
+                  className="input input-bordered input-lg w-full"
+                  value={formData.title}
+                  onChange={(e) =>
+                    setFormData({ ...formData, title: e.target.value })
+                  }
+                  required
+                />
+              </div>
+
+              {/* IMAGE URL */}
+              <div className="form-control space-y-2">
+                <label className="flex items-center gap-3">
+                  <div className="p-2 bg-primary/10 rounded-lg shrink-0">
+                    <ImageIcon className="size-5 text-primary" />
+                  </div>
+                  <span className="font-bold text-lg leading-none">
+                    Image URL
+                  </span>
+                </label>
+                <input
+                  type="url"
+                  className="input input-bordered input-lg w-full"
+                  value={formData.imageUrl}
+                  onChange={(e) =>
+                    setFormData({ ...formData, imageUrl: e.target.value })
+                  }
+                  required
+                />
+              </div>
+
+              {/* IMAGE PREVIEW */}
+              {formData.imageUrl && (
+                <div className="space-y-2">
+                  <p className="text-sm font-semibold text-base-content/60">
+                    Preview
+                  </p>
+                  <div className="rounded-xl overflow-hidden border border-base-300">
+                    <img
+                      src={formData.imageUrl}
+                      alt="Preview"
+                      className="w-full h-64 object-cover"
+                      onError={(e) =>
+                        (e.currentTarget.style.display = "none")
+                      }
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* DESCRIPTION */}
+              <div className="form-control space-y-2">
+                <label className="flex items-center gap-3">
+                  <div className="p-2 bg-primary/10 rounded-lg shrink-0">
+                    <FileTextIcon className="size-5 text-primary" />
+                  </div>
+                  <span className="font-bold text-lg leading-none">
+                    Description
+                  </span>
+                </label>
+                <textarea
+                  className="textarea textarea-bordered textarea-lg w-full resize-none min-h-40"
+                  value={formData.description}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      description: e.target.value,
+                    })
+                  }
+                  required
+                />
+              </div>
+
+              {/* ERROR */}
+              {isError && (
+                <div className="alert alert-error">
+                  Failed to update product. Try again.
+                </div>
+              )}
+
+              {/* ACTIONS */}
+              <div className="flex gap-4 pt-6">
+                <button
+                  type="submit"
+                  className="btn btn-primary btn-lg flex-1 gap-2"
+                  disabled={isPending}
+                >
+                  {isPending ? (
+                    <>
+                      <span className="loading loading-spinner loading-sm" />
+                      Saving…
+                    </>
+                  ) : (
+                    <>
+                      <Zap className="size-5" />
+                      Save Changes
+                    </>
+                  )}
+                </button>
+
+                <Link
+                  to="/profile"
+                  className="btn btn-outline btn-lg"
+                >
+                  Cancel
+                </Link>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
   );
 }
-export default EditProductForm
+
+export default EditProductForm;
