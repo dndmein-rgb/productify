@@ -68,19 +68,22 @@ function CommentsSection({ productId, comments = [], currentUserId }) {
             <div key={comment.id} className="chat chat-start">
               <div className="chat-image avatar">
                 <div className="w-8 rounded-full">
-                  <img src={comment.user?.imageUrl} alt={comment.user?.name} />
+                  <img 
+                    src={comment.user?.imageUrl || '/default-avatar.png'} 
+                    alt={comment.user?.name || 'User'} 
+                    onError={(e) => { e.target.src = '/default-avatar.png'; }}
+                  />
                 </div>
               </div>
 
               <div className="chat-header text-xs opacity-70 mb-2">
                 {comment.user?.name}
                 <time className="ml-2 text-xs opacity-50">
-                  {new Date(comment.createdAt).toLocaleDateString()}
+                  {comment.createdAt ? new Date(comment.createdAt).toLocaleDateString() : 'Unknown date'}
                 </time>
               </div>
 
               <div className="chat-bubble chat-bubble-neutral text-sm">{comment.content}</div>
-
               {currentUserId === comment.userId && (
                 <div className="chat-footer">
                   <button

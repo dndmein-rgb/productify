@@ -9,9 +9,14 @@ const ProfilePage = () => {
   const deleteProduct = useDeleteProduct();
 
   const handleDelete = (id) => {
-    if (confirm("Delete this product?")) deleteProduct.mutate(id);
+    if (confirm("Delete this product?")) {
+      deleteProduct.mutate(id, {
+        onError: (error) => {
+          alert(`Failed to delete product: ${error.message}`);
+        }
+      });
+    }
   };
-
   if (isLoading) return <LoadingSpinner />;
 
   return (

@@ -36,6 +36,7 @@ export const useDeleteProduct = () => {
   });
 };
 
+
 export const useMyProducts = () => {
   return useQuery({ queryKey: ["myProducts"], queryFn: getMyProducts });
 };

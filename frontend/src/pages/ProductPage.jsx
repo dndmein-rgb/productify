@@ -15,10 +15,12 @@ function ProductPage() {
 
   const handleDelete = () => {
     if (confirm("Delete this product permanently?")) {
-      deleteProduct.mutate(id, { onSuccess: () => navigate("/") });
+      deleteProduct.mutate(id, {
+        onSuccess: () => navigate("/"),
+        onError: () => alert("Failed to delete product. Please try again."),
+      });
     }
   };
-
   if (isLoading) return <LoadingSpinner />;
 
   if (error || !product) {
