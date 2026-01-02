@@ -30,8 +30,7 @@ function HomePage() {
             <img
               src="/image.png"
               alt="Creator"
-              className="relative h-64 lg:h-80 rounded-2xl shadow-2xl object-cover border-4 border-primary/20 group-hover:border-primary/50 transition-all duration-500 hover:scale-105"
-            />
+              className="relative h-64 lg:h-80 rounded-2xl shadow-2xl object-cover border-4 border-primary/20 hover:border-primary/50 transition-all duration-500 hover:scale-105"            />
           </div>
 
           {/* Hero Content */}

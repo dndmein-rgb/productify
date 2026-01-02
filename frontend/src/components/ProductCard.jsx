@@ -21,13 +21,12 @@ const ProductCard = ({ product }) => {
         />
         {isNew && (
           <div className="absolute top-6 right-6 z-20">
-            <span className="badge badge-primary badge-lg gap-1 shadow-lg animate-bounce">
+            <span className="badge badge-primary badge-lg gap-1 shadow-lg animate-pulse">
               <TrendingUp className="size-3" />
               NEW
             </span>
           </div>
-        )}
-      </figure>
+        )}      </figure>
 
       {/* Content */}
       <div className="card-body p-4 space-y-3">
