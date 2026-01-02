@@ -71,9 +71,11 @@ function CommentsSection({ productId, comments = [], currentUserId }) {
                   <img 
                     src={comment.user?.imageUrl || '/default-avatar.png'} 
                     alt={comment.user?.name || 'User'} 
-                    onError={(e) => { e.target.src = '/default-avatar.png'; }}
-                  />
-                </div>
+                    onError={(e) => { 
+                      e.target.onerror = null; // Prevent infinite loop
+                      e.target.src = '/default-avatar.png'; 
+                    }}
+                  />                </div>
               </div>
 
               <div className="chat-header text-xs opacity-70 mb-2">
