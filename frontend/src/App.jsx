@@ -34,7 +34,7 @@ const App = () => {
             element={isSignedIn ? <CreatePage /> : <Navigate to="/" />}
           />
           <Route
-            path="/edit"
+            path="/edit/:id"
             element={isSignedIn ? <EditProductPage /> : <Navigate to="/" />}
           />
         </Routes>

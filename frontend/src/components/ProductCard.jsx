@@ -1,9 +1,11 @@
 import { Link } from "react-router";
 import { MessageCircleIcon } from "lucide-react";
 
+const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+
 const ProductCard = ({ product }) => {
-  const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
   const isNew = new Date(product.createdAt) > oneWeekAgo;
+
   return (
     <Link
       to={`/product/${product.id}`}
@@ -21,7 +23,9 @@ const ProductCard = ({ product }) => {
           {product.title}
           {isNew && <span className="badge badge-secondary badge-sm">NEW</span>}
         </h2>
-        <p className="text-sm text-base-content/70 line-clamp-2">{product.description}</p>
+        <p className="text-sm text-base-content/70 line-clamp-2">
+          {product.description}
+        </p>
 
         <div className="divider my-1"></div>
 
@@ -33,15 +37,18 @@ const ProductCard = ({ product }) => {
                   <img src={product.user.imageUrl} alt={product.user.name} />
                 </div>
               </div>
-              <span className="text-xs text-base-content/60">{product.user.name}</span>
+              <span className="text-xs text-base-content/60">
+                {product.user.name}
+              </span>
             </div>
           )}
-          {product.comments && Array.isArray(product.comments) && product.comments.length > 0 && (
-            <div className="flex items-center gap-1 text-base-content/50">
-              <MessageCircleIcon className="size-3" />
-              <span className="text-xs">{product.comments.length}</span>
-            </div>
+          {product.comments?.length > 0 && (
+             <div className="flex items-center gap-1 text-base-content/50">
+               <MessageCircleIcon className="size-3" />
+               <span className="text-xs">{product.comments.length}</span>
+             </div>
           )}
+
         </div>
       </div>
     </Link>
