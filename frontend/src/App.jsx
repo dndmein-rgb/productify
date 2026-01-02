@@ -6,7 +6,7 @@ import {
   SignOutButton,
 } from "@clerk/clerk-react";
 import Navbar from "./components/Navbar";
-import { Routes, Route } from "react-router";
+import { Routes, Route, Navigate } from "react-router";
 import HomePage from "./pages/HomePage";
 import ProductPage from "./pages/ProductPage";
 import ProfilePage from "./pages/ProfilePage";
@@ -25,12 +25,12 @@ const App = () => {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/product/:id" element={<ProductPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/profile" element={isSignedIn?<ProfilePage />:<Navigate to="/" />} />
           <Route
             path="/create"
             element={isSignedIn ? <CreatePage /> : <Navigate to="/" />}
           />
-          <Route path="/edit" element={<EditProductPage />} />
+          <Route path="/edit" element={isSignedIn?<EditProductPage />:<Navigate to="/" />} />
         </Routes>
       </main>
     </div>
