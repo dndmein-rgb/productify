@@ -1,5 +1,6 @@
 import { PackageIcon, SparklesIcon, ArrowRight, Zap } from "lucide-react";
 import { Link } from "react-router";
+import { useRef } from "react";
 import LoadingSpinner from "../components/LoadingSpinner";
 import ProductCard from "../components/ProductCard";
 import { SignInButton } from "@clerk/clerk-react";
@@ -7,6 +8,11 @@ import { useProducts } from "../hooks/useProducts";
 
 function HomePage() {
   const { data: products, isLoading, error } = useProducts();
+  const productsRef = useRef(null);
+
+  const scrollToProducts = () => {
+    productsRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   if (isLoading) return <LoadingSpinner />;
 
@@ -24,7 +30,7 @@ function HomePage() {
       <div className="hero bg-linear-to-br from-primary/10 via-accent/5 to-base-100 rounded-2xl overflow-hidden border border-primary/20 shadow-xl animate-fade-in-up">
         <div className="hero-content flex-col lg:flex-row-reverse gap-12 py-16 px-6">
           {/* Hero Image */}
-          <div className="relative flex-1 animate-slide-in-right">
+          <div className="relative flex-1 animate-slide-in-right ml-4">
             <div className="absolute inset-0 bg-linear-to-br from-primary/30 to-accent/20 blur-3xl rounded-full scale-110 animate-pulse-soft" />
             <div className="absolute -top-8 -right-8 w-32 h-32 bg-accent/20 rounded-full blur-2xl animate-float" />
             <img
@@ -60,9 +66,9 @@ function HomePage() {
                   <ArrowRight className="size-5" />
                 </button>
               </SignInButton>
-              <Link to="/" className="btn btn-outline btn-lg gap-2 hover:bg-primary/10">
+              <button onClick={scrollToProducts} className="btn btn-outline btn-lg gap-2 hover:bg-primary/10">
                 Explore Products
-              </Link>
+              </button>
             </div>
           </div>
         </div>
@@ -91,7 +97,7 @@ function HomePage() {
       </div>
 
       {/* PRODUCTS SECTION */}
-      <div className="space-y-8 animate-fade-in-up" style={{ animationDelay: "0.4s" }}>
+      <div ref={productsRef} className="space-y-8 animate-fade-in-up" style={{ animationDelay: "0.4s" }}>
         <div className="flex items-center justify-between">
           <div className="space-y-2">
             <h2 className="text-3xl font-bold flex items-center gap-3">
@@ -148,10 +154,14 @@ function HomePage() {
             <h3 className="text-2xl font-bold">Ready to showcase your products?</h3>
             <p className="text-base-content/70 max-w-md">Join thousands of creators selling on Mercato today</p>
             <SignInButton mode="modal">
-              <button className="btn btn-primary btn-lg gap-2 btn-hover-lift shadow-lg">
-                <SparklesIcon className="size-5" />
-                Get Started Now
-              </button>
+             <Link
+  to="/create"
+  className="btn btn-primary btn-lg gap-2 btn-hover-lift shadow-lg flex items-center"
+>
+  <SparklesIcon className="size-5" />
+  <span>Get Started Now</span>
+</Link>
+
             </SignInButton>
           </div>
         </div>
