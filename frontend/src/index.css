@@ -1,14 +1,21 @@
 @import "tailwindcss";
-@plugin "daisyui"{
-    themes:all
-};
 
-/* Smooth scrolling */
+@plugin "daisyui" {
+  themes: all;
+}
+
+/* =========================
+   Base styles
+   ========================= */
+
 html {
   scroll-behavior: smooth;
 }
 
-/* Professional animations */
+/* =========================
+   Keyframes (plain CSS is fine)
+   ========================= */
+
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -89,36 +96,43 @@ html {
   }
 }
 
-/* Utility classes */
-.animate-fade-in-up {
+/* =========================
+   Custom utilities (v4.1 way)
+   ========================= */
+
+@utility animate-fade-in-up {
   animation: fadeInUp 0.6s ease-out;
 }
 
-.animate-slide-in-left {
+@utility animate-slide-in-left {
   animation: slideInLeft 0.6s ease-out;
 }
 
-.animate-slide-in-right {
+@utility animate-slide-in-right {
   animation: slideInRight 0.6s ease-out;
 }
 
-.animate-scale-in {
+@utility animate-scale-in {
   animation: scaleIn 0.5s ease-out;
 }
 
-.animate-glow {
+@utility animate-glow {
   animation: glow 2s ease-in-out infinite;
 }
 
-.animate-float {
+@utility animate-float {
   animation: float 3s ease-in-out infinite;
 }
 
-.animate-pulse-soft {
+/* THIS is the important one */
+@utility animate-pulse-soft {
   animation: pulse-soft 2s ease-in-out infinite;
 }
 
-/* Card hover effects */
+/* =========================
+   Components / effects
+   ========================= */
+
 .card-hover {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -128,7 +142,6 @@ html {
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
 
-/* Button hover effects */
 .btn-hover-lift {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -138,7 +151,6 @@ html {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* Gradient text */
 .gradient-text {
   background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
   -webkit-background-clip: text;
@@ -146,12 +158,12 @@ html {
   background-clip: text;
 }
 
-/* Smooth transitions */
+/* Global transitions (still risky, still valid) */
 * {
   @apply transition-colors duration-200;
 }
 
-/* Link hover effects */
+/* Link underline animation */
 a {
   @apply relative;
 }
@@ -171,29 +183,34 @@ a:hover::after {
   width: 100%;
 }
 
-/* Badge animations */
+/* Badge animation */
 .badge {
   @apply animate-pulse-soft;
 }
 
-/* Loading skeleton */
+/* Skeleton loader */
 .skeleton-loading {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background: linear-gradient(
+    90deg,
+    #f0f0f0 25%,
+    #e0e0e0 50%,
+    #f0f0f0 75%
+  );
   background-size: 1000px 100%;
   animation: shimmer 2s infinite;
 }
 
-/* Backdrop blur effect */
+/* Backdrop blur */
 .backdrop-blur-sm {
   backdrop-filter: blur(4px);
 }
 
-/* Focus states */
+/* Focus ring helper */
 .focus-ring {
   @apply focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
 }
 
-/* Smooth page transitions */
+/* Page transitions */
 .page-transition {
   animation: fadeInUp 0.4s ease-out;
 }
